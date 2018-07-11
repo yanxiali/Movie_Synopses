@@ -1,7 +1,7 @@
 
 # Document Clustering and Topic Modeling
 
-In this project, I use unsupervised learning models to cluster unlabeled documents into different groups, visualize the results and identify their latent topics/structures.
+In this project, I use unsupervised learning models to cluster unlabeled synopses of Top 100 [Greatest Movies of All Time from IMDB](https://www.imdb.com/list/ls055592025/) into different groups, visualize the results and identify their latent topics/structures.
 
 ## Contents
 
@@ -31,7 +31,7 @@ import matplotlib.pyplot as plt
 import lda
 ```
 
-Read data from files. In summary, we have 100 titles and 100 synoposes (combined from imdb and wiki).
+Read data from files. In summary, the data have 100 titles and 100 synoposes (combined from imdb and wiki).
 
 
 ```python
@@ -55,7 +55,7 @@ for i in range(len(synopses_wiki)):
     
 #Because these synopses have already been ordered in popularity order, 
 #just need to generate a list of ordered numbers for future usage.
-ranks = range(len(titles))
+ranks = range(1, len(titles)+1)
 ```
 
 # Part 2: Tokenizing and Stemming
@@ -224,7 +224,7 @@ print(cos_matrix)
 ```python
 from sklearn.cluster import KMeans
 
-num_clusters = 5
+num_clusters = 4
 km = KMeans(n_clusters=num_clusters)
 km.fit(tfidf_matrix)
 clusters = km.labels_.tolist()
@@ -272,62 +272,62 @@ frame.head(10)
   </thead>
   <tbody>
     <tr>
-      <th>2</th>
-      <td>0</td>
+      <th>3</th>
+      <td>1</td>
       <td>The Godfather</td>
-      <td>2</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>1</td>
+      <td>2</td>
       <td>The Shawshank Redemption</td>
       <td>3</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>2</td>
-      <td>Schindler's List</td>
-      <td>2</td>
-    </tr>
-    <tr>
       <th>1</th>
       <td>3</td>
-      <td>Raging Bull</td>
+      <td>Schindler's List</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>1</th>
+      <th>0</th>
       <td>4</td>
+      <td>Raging Bull</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>5</td>
       <td>Casablanca</td>
-      <td>1</td>
+      <td>2</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>5</td>
+      <td>6</td>
       <td>One Flew Over the Cuckoo's Nest</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>6</td>
+      <th>3</th>
+      <td>7</td>
       <td>Gone with the Wind</td>
-      <td>2</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>7</td>
+      <td>8</td>
       <td>Citizen Kane</td>
       <td>2</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>8</td>
+      <th>3</th>
+      <td>9</td>
       <td>The Wizard of Oz</td>
-      <td>1</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>9</td>
+      <td>10</td>
       <td>Titanic</td>
       <td>3</td>
     </tr>
@@ -372,24 +372,20 @@ frame['cluster'].value_counts().to_frame()
   </thead>
   <tbody>
     <tr>
-      <th>1</th>
-      <td>33</td>
+      <th>2</th>
+      <td>36</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>27</td>
+      <td>33</td>
     </tr>
     <tr>
-      <th>2</th>
+      <th>1</th>
       <td>20</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>14</td>
-    </tr>
-    <tr>
       <th>0</th>
-      <td>6</td>
+      <td>11</td>
     </tr>
   </tbody>
 </table>
@@ -438,23 +434,19 @@ grouped.mean().to_frame()
   <tbody>
     <tr>
       <th>0</th>
-      <td>52.833333</td>
+      <td>46.545455</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>48.060606</td>
+      <td>42.950000</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>51.700000</td>
+      <td>59.583333</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>53.925926</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>39.785714</td>
+      <td>46.484848</td>
     </tr>
   </tbody>
 </table>
@@ -487,56 +479,51 @@ for i in range(num_clusters):
 
     <Document clustering result by K-means>
     Cluster 0 words:
-    george,
-    marries,
-    family,
-    woman,
+    singing,
+    new,
+    fight,
+    apartment,
     friend,
-    john,
-    Cluster 0 titles (6 movies): 
-    It's a Wonderful Life, The Philadelphia Story, An American in Paris, The King's Speech, A Place in the Sun, Tootsie
+    bar,
+    Cluster 0 titles (11 movies): 
+    Raging Bull, On the Waterfront, Singin' in the Rain, Rocky, An American in Paris, Jaws, The Good, the Bad and the Ugly, The Apartment, Midnight Cowboy, Annie Hall, Nashville
     Cluster 1 words:
-    killing,
-    say,
-    friend,
-    escape,
-    n't,
-    town,
-    Cluster 1 titles (33 movies): 
-    Raging Bull, Casablanca, One Flew Over the Cuckoo's Nest, The Wizard of Oz, The Godfather: Part II, On the Waterfront, West Side Story, Star Wars, 2001: A Space Odyssey, The Silence of the Lambs, Chinatown, 12 Angry Men, Gandhi, Unforgiven, Raiders of the Lost Ark, Rocky, To Kill a Mockingbird, Jaws, The Good, the Bad and the Ugly, Butch Cassidy and the Sundance Kid, High Noon, The Deer Hunter, Mr. Smith Goes to Washington, Annie Hall, Shane, Nashville, Stagecoach, The Maltese Falcon, Taxi Driver, Wuthering Heights, Double Indemnity, Rear Window, The Third Man
-    Cluster 2 words:
-    family,
-    war,
-    captain,
-    father,
-    marries,
-    marriages,
-    Cluster 2 titles (20 movies): 
-    The Godfather, Schindler's List, Gone with the Wind, Citizen Kane, The Sound of Music, Amadeus, A Streetcar Named Desire, The Best Years of Our Lives, Doctor Zhivago, The Pianist, City Lights, It Happened One Night, Out of Africa, Good Will Hunting, Terms of Endearment, Giant, Network, The African Queen, Mutiny on the Bounty, Yankee Doodle Dandy
-    Cluster 3 words:
-    car,
-    mother,
-    police,
-    john,
-    house,
-    prison,
-    Cluster 3 titles (27 movies): 
-    The Shawshank Redemption, Titanic, Psycho, Sunset Blvd., Vertigo, Forrest Gump, E.T. the Extra-Terrestrial, Singin' in the Rain, Some Like It Hot, My Fair Lady, Ben-Hur, The Apartment, Goodfellas, The Exorcist, The French Connection, Midnight Cowboy, Rain Man, Fargo, The Grapes of Wrath, The Green Mile, Close Encounters of the Third Kind, The Graduate, American Graffiti, Pulp Fiction, A Clockwork Orange, Rebel Without a Cause, North by Northwest
-    Cluster 4 words:
     soldiers,
-    killing,
     army,
-    general,
+    killing,
     commanded,
-    battle,
-    Cluster 4 titles (14 movies): 
-    Lawrence of Arabia, The Bridge on the River Kwai, Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb, Apocalypse Now, The Lord of the Rings: The Return of the King, Gladiator, From Here to Eternity, Saving Private Ryan, Patton, Braveheart, The Treasure of the Sierra Madre, Platoon, Dances with Wolves, All Quiet on the Western Front
+    orders,
+    war,
+    Cluster 1 titles (20 movies): 
+    Schindler's List, One Flew Over the Cuckoo's Nest, Lawrence of Arabia, The Bridge on the River Kwai, Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb, Apocalypse Now, The Lord of the Rings: The Return of the King, Gladiator, From Here to Eternity, Saving Private Ryan, Raiders of the Lost Ark, Patton, Braveheart, Butch Cassidy and the Sundance Kid, Platoon, Dances with Wolves, The Deer Hunter, All Quiet on the Western Front, Stagecoach, Mutiny on the Bounty
+    Cluster 2 words:
+    police,
+    car,
+    killing,
+    father,
+    say,
+    mr.,
+    Cluster 2 titles (36 movies): 
+    Casablanca, Citizen Kane, Psycho, Sunset Blvd., Vertigo, West Side Story, Chinatown, Some Like It Hot, 12 Angry Men, Amadeus, Gandhi, Unforgiven, To Kill a Mockingbird, My Fair Lady, The Treasure of the Sierra Madre, High Noon, The Exorcist, The French Connection, City Lights, It Happened One Night, Out of Africa, Fargo, Shane, The Graduate, American Graffiti, Pulp Fiction, The African Queen, The Maltese Falcon, A Clockwork Orange, Taxi Driver, Wuthering Heights, Double Indemnity, Rebel Without a Cause, Rear Window, The Third Man, North by Northwest
+    Cluster 3 words:
+    family,
+    george,
+    home,
+    friend,
+    father,
+    war,
+    Cluster 3 titles (33 movies): 
+    The Godfather, The Shawshank Redemption, Gone with the Wind, The Wizard of Oz, Titanic, The Godfather: Part II, Forrest Gump, The Sound of Music, Star Wars, E.T. the Extra-Terrestrial, 2001: A Space Odyssey, The Silence of the Lambs, It's a Wonderful Life, A Streetcar Named Desire, The Philadelphia Story, The Best Years of Our Lives, Ben-Hur, Doctor Zhivago, The Pianist, Goodfellas, The King's Speech, A Place in the Sun, Mr. Smith Goes to Washington, Rain Man, Good Will Hunting, Terms of Endearment, Tootsie, Giant, The Grapes of Wrath, The Green Mile, Close Encounters of the Third Kind, Network, Yankee Doodle Dandy
 
+
+It shows that the main topics of the 4 clusters of movies are:
+killing, family, wars & love
 
 ## 4.2. Plot K-means Result
 
 
 ```python
+# use PCA to visualize the 2 principle components. 
 pca = decomposition.PCA(n_components=2)
 tfidf_matrix_np=tfidf_matrix.toarray()
 pca.fit(tfidf_matrix_np)
@@ -568,21 +555,17 @@ for name, group in groups:
             label=cluster_names[name], color=cluster_colors[name], 
             mec='none')
 
-ax.legend(numpoints=1,loc=4)  #show legend with only 1 point, position is right bottom.
+ax.legend(numpoints=1,loc=1)  #show legend with only 1 point, position is upper right. 
 
 plt.show() #show the plot
 ```
 
 
-![png](output_34_0.png)
+![png](output_35_0.png)
 
-
-
-```python
-plt.close()
-```
 
 # Part 5: Topic Modeling - Latent Dirichlet Allocation
+I will use LDA to group the movies.
 
 
 ```python
@@ -604,7 +587,7 @@ feature_matrix_synopses_tf = np.asarray(feature_matrix_synopses_tf)
 
 
 ```python
-model = lda.LDA(n_topics=5, n_iter=500, random_state=1)
+model = lda.LDA(n_topics=4, n_iter=500, random_state=42)
 ```
 
 <li> "model.topic_word_" saves the importance of tf_selected_words in LDA model, i.e. words similarity matrix
@@ -630,59 +613,59 @@ for i, topic_dist in enumerate(topic_word):
     INFO:lda:n_documents: 100
     INFO:lda:vocab_size: 538
     INFO:lda:n_words: 61218
-    INFO:lda:n_topics: 5
+    INFO:lda:n_topics: 4
     INFO:lda:n_iter: 500
-    INFO:lda:<0> log likelihood: -484683
-    INFO:lda:<10> log likelihood: -428330
-    INFO:lda:<20> log likelihood: -412489
-    INFO:lda:<30> log likelihood: -406790
-    INFO:lda:<40> log likelihood: -403019
-    INFO:lda:<50> log likelihood: -400070
-    INFO:lda:<60> log likelihood: -398296
-    INFO:lda:<70> log likelihood: -397266
-    INFO:lda:<80> log likelihood: -395732
-    INFO:lda:<90> log likelihood: -395476
-    INFO:lda:<100> log likelihood: -394666
-    INFO:lda:<110> log likelihood: -394617
-    INFO:lda:<120> log likelihood: -393980
-    INFO:lda:<130> log likelihood: -393121
-    INFO:lda:<140> log likelihood: -392773
-    INFO:lda:<150> log likelihood: -392559
-    INFO:lda:<160> log likelihood: -392274
-    INFO:lda:<170> log likelihood: -391875
-    INFO:lda:<180> log likelihood: -392254
-    INFO:lda:<190> log likelihood: -391966
-    INFO:lda:<200> log likelihood: -391777
-    INFO:lda:<210> log likelihood: -391467
-    INFO:lda:<220> log likelihood: -391043
-    INFO:lda:<230> log likelihood: -391624
-    INFO:lda:<240> log likelihood: -391707
-    INFO:lda:<250> log likelihood: -391696
-    INFO:lda:<260> log likelihood: -391673
-    INFO:lda:<270> log likelihood: -391540
-    INFO:lda:<280> log likelihood: -391234
-    INFO:lda:<290> log likelihood: -390801
-    INFO:lda:<300> log likelihood: -391805
-    INFO:lda:<310> log likelihood: -392021
-    INFO:lda:<320> log likelihood: -391969
-    INFO:lda:<330> log likelihood: -390905
-    INFO:lda:<340> log likelihood: -391478
-    INFO:lda:<350> log likelihood: -390938
-    INFO:lda:<360> log likelihood: -390935
-    INFO:lda:<370> log likelihood: -390741
-    INFO:lda:<380> log likelihood: -391222
-    INFO:lda:<390> log likelihood: -390952
-    INFO:lda:<400> log likelihood: -390668
-    INFO:lda:<410> log likelihood: -390701
-    INFO:lda:<420> log likelihood: -390636
-    INFO:lda:<430> log likelihood: -390205
-    INFO:lda:<440> log likelihood: -390684
-    INFO:lda:<450> log likelihood: -390519
-    INFO:lda:<460> log likelihood: -390995
-    INFO:lda:<470> log likelihood: -390638
-    INFO:lda:<480> log likelihood: -390798
-    INFO:lda:<490> log likelihood: -390844
-    INFO:lda:<499> log likelihood: -390644
+    INFO:lda:<0> log likelihood: -468275
+    INFO:lda:<10> log likelihood: -419126
+    INFO:lda:<20> log likelihood: -406304
+    INFO:lda:<30> log likelihood: -401554
+    INFO:lda:<40> log likelihood: -397861
+    INFO:lda:<50> log likelihood: -395310
+    INFO:lda:<60> log likelihood: -394295
+    INFO:lda:<70> log likelihood: -393199
+    INFO:lda:<80> log likelihood: -392362
+    INFO:lda:<90> log likelihood: -391746
+    INFO:lda:<100> log likelihood: -391167
+    INFO:lda:<110> log likelihood: -391029
+    INFO:lda:<120> log likelihood: -390754
+    INFO:lda:<130> log likelihood: -389672
+    INFO:lda:<140> log likelihood: -389680
+    INFO:lda:<150> log likelihood: -389629
+    INFO:lda:<160> log likelihood: -389268
+    INFO:lda:<170> log likelihood: -389463
+    INFO:lda:<180> log likelihood: -389061
+    INFO:lda:<190> log likelihood: -389237
+    INFO:lda:<200> log likelihood: -389228
+    INFO:lda:<210> log likelihood: -388704
+    INFO:lda:<220> log likelihood: -388672
+    INFO:lda:<230> log likelihood: -388748
+    INFO:lda:<240> log likelihood: -388627
+    INFO:lda:<250> log likelihood: -387824
+    INFO:lda:<260> log likelihood: -387258
+    INFO:lda:<270> log likelihood: -387927
+    INFO:lda:<280> log likelihood: -388226
+    INFO:lda:<290> log likelihood: -388128
+    INFO:lda:<300> log likelihood: -387900
+    INFO:lda:<310> log likelihood: -387717
+    INFO:lda:<320> log likelihood: -388069
+    INFO:lda:<330> log likelihood: -387946
+    INFO:lda:<340> log likelihood: -387700
+    INFO:lda:<350> log likelihood: -387335
+    INFO:lda:<360> log likelihood: -387190
+    INFO:lda:<370> log likelihood: -387131
+    INFO:lda:<380> log likelihood: -387149
+    INFO:lda:<390> log likelihood: -387062
+    INFO:lda:<400> log likelihood: -386498
+    INFO:lda:<410> log likelihood: -386736
+    INFO:lda:<420> log likelihood: -386692
+    INFO:lda:<430> log likelihood: -386681
+    INFO:lda:<440> log likelihood: -387017
+    INFO:lda:<450> log likelihood: -386409
+    INFO:lda:<460> log likelihood: -386703
+    INFO:lda:<470> log likelihood: -386477
+    INFO:lda:<480> log likelihood: -387068
+    INFO:lda:<490> log likelihood: -386490
+    INFO:lda:<499> log likelihood: -386251
 
 
 
@@ -698,52 +681,27 @@ for i in range(len(doc_topic)):
     else:
         topic_doc_dict[topicID].append(titles[i])
 for i in topic_doc_dict:
+    print('==============================')
     print("Cluster " + str(i) + " words: " + ", ".join(topic_keywords_list[i]))
     print("Cluster " + str(i) + " titles (" + str(len(topic_doc_dict[i])) + " movies): " )
     print(', '.join(topic_doc_dict[i]))
 ```
 
     <Document clustering result by LDA>
-    Cluster 2 words: father, family, new, end, life, years
-    Cluster 2 titles (28 movies): 
-    The Godfather, Casablanca, Citizen Kane, The Godfather: Part II, Sunset Blvd., Forrest Gump, The Sound of Music, Singin' in the Rain, Amadeus, A Streetcar Named Desire, The Best Years of Our Lives, Doctor Zhivago, Braveheart, The Good, the Bad and the Ugly, Goodfellas, City Lights, The King's Speech, A Place in the Sun, Midnight Cowboy, Mr. Smith Goes to Washington, Rain Man, Annie Hall, Out of Africa, Good Will Hunting, Terms of Endearment, Giant, Network, Yankee Doodle Dandy
-    Cluster 4 words: killing, death, men, use, john, shooting
-    Cluster 4 titles (23 movies): 
-    The Shawshank Redemption, On the Waterfront, Star Wars, 2001: A Space Odyssey, Chinatown, The Bridge on the River Kwai, 12 Angry Men, Gladiator, From Here to Eternity, Saving Private Ryan, Unforgiven, Raiders of the Lost Ark, To Kill a Mockingbird, Jaws, Butch Cassidy and the Sundance Kid, The Treasure of the Sierra Madre, Platoon, High Noon, The Deer Hunter, Shane, The Green Mile, Close Encounters of the Third Kind, Taxi Driver
-    Cluster 0 words: george, war, soldiers, army, captain, commanded
-    Cluster 0 titles (10 movies): 
-    Schindler's List, Lawrence of Arabia, It's a Wonderful Life, Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb, Apocalypse Now, The Lord of the Rings: The Return of the King, Patton, Dances with Wolves, Stagecoach, Mutiny on the Bounty
-    Cluster 3 words: n't, days, friend, comes, say, house
-    Cluster 3 titles (26 movies): 
-    Raging Bull, One Flew Over the Cuckoo's Nest, Gone with the Wind, The Wizard of Oz, Psycho, Vertigo, West Side Story, E.T. the Extra-Terrestrial, Some Like It Hot, Gandhi, Rocky, The Philadelphia Story, An American in Paris, My Fair Lady, Ben-Hur, The Exorcist, All Quiet on the Western Front, Tootsie, The Grapes of Wrath, Nashville, American Graffiti, Pulp Fiction, The African Queen, A Clockwork Orange, Wuthering Heights, The Third Man
-    Cluster 1 words: car, away, police, meet, helping, apartment
-    Cluster 1 titles (13 movies): 
-    Titanic, The Silence of the Lambs, The Apartment, The Pianist, The French Connection, It Happened One Night, Fargo, The Graduate, The Maltese Falcon, Double Indemnity, Rebel Without a Cause, Rear Window, North by Northwest
-
-
-# Appendix: K-means
-
-
-```python
-from sklearn.datasets.samples_generator import make_blobs
-X, y = make_blobs(n_samples=300, centers=4,
-                  random_state=0, cluster_std=0.60)
-plt.scatter(X[:, 0], X[:, 1], s=50);
-```
-
-
-![png](output_43_0.png)
-
-
-
-```python
-from sklearn.cluster import KMeans
-est = KMeans(4)  # 4 clusters
-est.fit(X)
-y_kmeans = est.predict(X)
-plt.scatter(X[:, 0], X[:, 1], c=y_kmeans, s=50);
-```
-
-
-![png](output_44_0.png)
+    ==============================
+    Cluster 1 words: father, family, george, love, working, filmed
+    Cluster 1 titles (24 movies): 
+    The Godfather, Raging Bull, Gone with the Wind, Citizen Kane, The Godfather: Part II, The Sound of Music, Singin' in the Rain, It's a Wonderful Life, Amadeus, Gandhi, A Streetcar Named Desire, The Philadelphia Story, An American in Paris, The Best Years of Our Lives, Braveheart, City Lights, The King's Speech, A Place in the Sun, Mr. Smith Goes to Washington, Annie Hall, Good Will Hunting, Terms of Endearment, Giant, Yankee Doodle Dandy
+    ==============================
+    Cluster 3 words: asks, say, n't, killing, friend, goes
+    Cluster 3 titles (33 movies): 
+    The Shawshank Redemption, Casablanca, One Flew Over the Cuckoo's Nest, Psycho, On the Waterfront, West Side Story, 2001: A Space Odyssey, Chinatown, Some Like It Hot, 12 Angry Men, Unforgiven, Rocky, To Kill a Mockingbird, Jaws, The Apartment, The Deer Hunter, Tootsie, Fargo, The Grapes of Wrath, Shane, The Green Mile, Close Encounters of the Third Kind, Nashville, American Graffiti, Pulp Fiction, The Maltese Falcon, A Clockwork Orange, Taxi Driver, Double Indemnity, Rebel Without a Cause, Rear Window, The Third Man, North by Northwest
+    ==============================
+    Cluster 0 words: killing, orders, men, soldiers, army, war
+    Cluster 0 titles (17 movies): 
+    Schindler's List, Lawrence of Arabia, Star Wars, The Bridge on the River Kwai, Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb, Apocalypse Now, The Lord of the Rings: The Return of the King, Gladiator, From Here to Eternity, Saving Private Ryan, Raiders of the Lost Ark, Patton, Platoon, Dances with Wolves, All Quiet on the Western Front, Stagecoach, Mutiny on the Bounty
+    ==============================
+    Cluster 2 words: run, away, helping, home, way, discover
+    Cluster 2 titles (26 movies): 
+    The Wizard of Oz, Titanic, Sunset Blvd., Vertigo, Forrest Gump, E.T. the Extra-Terrestrial, The Silence of the Lambs, My Fair Lady, Ben-Hur, Doctor Zhivago, The Good, the Bad and the Ugly, Butch Cassidy and the Sundance Kid, The Treasure of the Sierra Madre, High Noon, The Pianist, Goodfellas, The Exorcist, The French Connection, It Happened One Night, Midnight Cowboy, Rain Man, Out of Africa, Network, The Graduate, The African Queen, Wuthering Heights
 
